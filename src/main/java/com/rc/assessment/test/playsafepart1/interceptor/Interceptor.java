@@ -13,11 +13,19 @@ public class Interceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        return super.preHandle(request, response, handler);
+        long startTime = System.currentTimeMillis();
+        request.setAttribute("startTime", startTime);
+        return true;
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         super.afterCompletion(request, response, handler, ex);
+        long endTime = System.currentTimeMillis();
+        long startTime = (Long)request.getAttribute("startTime");
+        request.setAttribute("endTime", endTime);
+        long executeTime = endTime - startTime;
+        request.setAttribute("timeTaken", executeTime);
+        log.info("Request Duration Time : {}", request.getAttribute("timeTaken"));
     }
 }
