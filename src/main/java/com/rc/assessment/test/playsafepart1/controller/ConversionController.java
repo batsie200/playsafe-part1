@@ -33,4 +33,9 @@ public class ConversionController {
     public ResponseEntity<Double> mileToKilometer(@RequestBody Unit mile) throws Exception {
         return new ResponseEntity<>(conversionService.mtok(mile), HttpStatus.OK);
     }
+
+    @PostMapping("/ktom")
+    public ResponseEntity<Double> kilometerToMile(@RequestBody Unit kilometer) throws Exception {
+        return new ResponseEntity<>(conversionService.ktom(kilometer), HttpStatus.OK);
+    }
 }
